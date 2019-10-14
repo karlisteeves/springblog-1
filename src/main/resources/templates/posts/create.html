@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/header :: header">
+		<meta charset="UTF-8">
+		<title>Title</title>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css" rel="stylesheet">
+	</head>
+	<body>
+		<nav th:replace="fragments/navbar :: navbar"></nav>
+		<div class="row">
+			<form action="" class="medium-9 medium-centered columns" th:action="@{/posts/create}" th:method="post" th:object="${post}">
+				<label for="title">Title</label>
+				<input id="title" th:field="*{title}" type="text"/>
+
+				<label for="body">Body</label>
+				<textarea id="body" th:field="*{body}"></textarea>
+
+				<button class="button">Submit</button>
+			</form>
+		</div>
+		<footer th:replace="fragments/footer :: footer"></footer>
+	</body>
+</html>

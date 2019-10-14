@@ -6,6 +6,7 @@ import com.codeup.springblog.repos.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -23,9 +24,6 @@ public class PostController {
     @GetMapping("/posts")
     public String posts(Model model) {
 
-        Post post = new Post("Title", "Description", userDao.findById(1L).orElse(null));
-        postDao.save(post);
-
         model.addAttribute("posts", postDao.findAll());
 
         return "posts/index";
@@ -39,13 +37,36 @@ public class PostController {
         return "posts/show";
     }
 
+    @GetMapping("/posts/{id}/edit")
+    public String editPost(@PathVariable long id, Model model) {
+        model.addAttribute("post", postDao.findById(id).orElse(null));
+
+        return "posts/edit";
+    }
+
+    @PostMapping("/posts/{id}/edit")
+    public String editPostSubmit(@PathVariable("id") long id, @ModelAttribute Post post) {
+        post.setOwner(userDao.findById(1L).orElse(null));
+        post.setId(id);
+
+        postDao.save(post);
+
+        return "redirect:/posts";
+    }
+
     @GetMapping("/posts/create")
-    public String createPost() {
-        return "view the form for creating a post";
+    public String showCreateForm(Model model) {
+        model.addAttribute("post", new Post());
+
+        return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    public String postPost() {
-        return "create a new post";
+    public String create(@ModelAttribute Post post) {
+        post.setOwner(userDao.findById(1L).orElse(null));
+
+        postDao.save(post);
+
+        return "redirect:/posts";
     }
 }
