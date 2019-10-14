@@ -11,7 +11,10 @@
 		<div class="row">
 			<div class="medium-9 medium-centered columns">
 				<h1 th:text="${post.title}">Post</h1>
-				<h2 th:text="${post.body}">Post</h2>
+				<h3>By:
+					<span th:text="${post.getOwner().getEmail()}"></span>
+				</h3>
+				<h5 th:text="${post.body}">Post</h5>
 			</div>
 		</div>
 		<footer th:replace="fragments/footer :: footer"></footer>

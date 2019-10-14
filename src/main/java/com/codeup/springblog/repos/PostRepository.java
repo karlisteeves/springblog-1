@@ -5,5 +5,4 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface PostRepository extends CrudRepository<Post, Long> {
 
-    long editById(long id);
 }
