@@ -7,10 +7,19 @@
 	</head>
 	<body>
 		<nav th:replace="fragments/navbar :: navbar"></nav>
-		<div class="row">
-			<div class="medium-9 medium-centered columns" th:each="post : ${posts}">
-				<h4 th:text="${post.title}"></h4>
-				<p th:text="${post.body}"></p>
+		<div class="grid-container">
+			<div class="media-object" th:each="post : ${posts}">
+				<div class="media-object-section">
+					<div class="thumbnail">
+						<img src="https://picsum.photos/100">
+					</div>
+				</div>
+				<div class="media-object-section">
+					<a th:href="'/posts/' + ${post.id}">
+						<h4 th:text="${post.title}"></h4>
+					</a>
+					<p th:text="${post.body}"></p>
+				</div>
 			</div>
 		</div>
 		<footer th:replace="fragments/footer :: footer"></footer>

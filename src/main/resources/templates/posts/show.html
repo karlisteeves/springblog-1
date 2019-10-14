@@ -8,14 +8,17 @@
 	</head>
 	<body>
 		<nav th:replace="fragments/navbar :: navbar"></nav>
-		<div class="row">
-			<div class="medium-9 medium-centered columns">
-				<h1 th:text="${post.title}">Post</h1>
-				<h3>By:
-					<span th:text="${post.getOwner().getEmail()}"></span>
-				</h3>
-				<h5 th:text="${post.body}">Post</h5>
+		<div class="grid-container">
+			<div class="media-object">
+				<div class="media-object-section">
+					<h1 th:text="${post.title}">Post</h1>
+					<h3>By:
+						<span th:text="${post.getOwner().getEmail()}"></span>
+					</h3>
+					<h5 th:text="${post.body}">Post</h5>
+				</div>
 			</div>
+			<a class="button" th:href="'../posts/' + ${post.id} + '/edit'">Edit</a>
 		</div>
 		<footer th:replace="fragments/footer :: footer"></footer>
 	</body>
