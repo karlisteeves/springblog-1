@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
+	<head th:replace="fragments/header :: header">
 		<meta charset="UTF-8"/>
 		<title>Roll Dice</title>
 	</head>
 	<body>
-
+		<nav th:replace="fragments/navbar :: navbar"></nav>
 		<h1>Guess a number: </h1>
 		<a href="/roll-dice/1">1</a>
 		<a href="/roll-dice/2">2</a>
@@ -18,5 +18,6 @@
 		<h1 th:unless="${correct}">Incorrect guess!!!</h1>
 
 		<h1>You guessed: <span th:text="${n}"></span> and the correct number was: <span th:text="${random}"></span></h1>
+		<footer th:replace="fragments/footer :: footer"></footer>
 	</body>
 </html>
