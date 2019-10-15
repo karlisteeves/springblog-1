@@ -8,10 +8,13 @@ import com.codeup.springblog.services.EmailService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 @Controller
 public class PostController {
@@ -50,7 +53,14 @@ public class PostController {
     }
 
     @PostMapping("/posts/{id}/edit")
-    public String editPostSubmit(@PathVariable("id") long id, @ModelAttribute Post post) {
+    public String editPostSubmit(@PathVariable("id") long id, @ModelAttribute @Valid Post post, Errors validation, Model model) {
+
+        if (validation.hasErrors()) {
+            model.addAttribute("errors", validation);
+            model.addAttribute("post", post);
+            return "posts/" + id + "/edit";
+        }
+
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setOwner(user);
         post.setId(id);
@@ -68,7 +78,14 @@ public class PostController {
     }
 
     @PostMapping("/posts/create")
-    public String create(@ModelAttribute Post post) {
+    public String create(@ModelAttribute @Valid Post post, Errors validation, Model model) {
+
+        if (validation.hasErrors()) {
+            model.addAttribute("errors", validation);
+            model.addAttribute("post", post);
+            return "posts/create";
+        }
+
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setOwner(user);
         postDao.save(post);

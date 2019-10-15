@@ -7,22 +7,24 @@
 	<body>
 		<nav th:replace="fragments/navbar :: navbar"></nav>
 		<div class="grid-container">
+			<div class="grid-x">
+				<div class="cell small-8 small-offset-2">
+					<h1 class="text-center">Log In</h1>
+					<div th:if="${param.logout}">
+						You have been logged out.
+					</div>
 
-			<h1>Log In</h1>
-			<div th:if="${param.error}">
-				Invalid Username and Password.
-			</div>
-			<div th:if="${param.logout}">
-				You have been logged out.
-			</div>
+					<form method="post" th:action="@{/login}">
+						<label for="username">Username</label>
+						<input id="username" name="username" type="text"/>
+						<label for="password">Password</label>
+						<input id="password" name="password" type="password"/>
+						<p class="help-text" th:if="${param.error}">Invalid Username and Password.</p>
 
-			<form method="post" th:action="@{/login}">
-				<label for="username">Username</label>
-				<input id="username" name="username" type="text"/>
-				<label for="password">Password</label>
-				<input id="password" name="password" type="password"/>
-				<button class="button" type="submit">Log In</button>
-			</form>
+						<button class="button" type="submit">Log In</button>
+					</form>
+				</div>
+			</div>
 		</div>
 		<footer th:replace="fragments/footer :: footer"></footer>
 

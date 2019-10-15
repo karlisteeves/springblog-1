@@ -7,19 +7,27 @@
 	<body>
 		<nav th:replace="fragments/navbar :: navbar"></nav>
 		<div class="grid-container">
-			<!--			<h1>Create an account</h1>-->
-			<form th:action="@{/sign-up}" th:method="post" th:object="${user}">
-				<label for="username">Username</label>
-				<input id="username" th:field="*{username}" type="text"/>
+			<div class="grid-x">
+				<div class="cell small-8 small-offset-2">
+					<h1 class="text-center">Sign up</h1>
 
-				<label for="email">Email</label>
-				<input id="email" th:field="*{email}" type="text"/>
+					<form th:action="@{/sign-up}" th:method="post" th:object="${user}">
+						<label for="username">Username</label>
+						<input id="username" th:field="*{username}" type="text"/>
+						<p class="help-text" th:errors="*{username}" th:if="${#fields.hasErrors('username')}"></p>
 
-				<label for="password">Password</label>
-				<input id="password" th:field="*{password}" type="password"/>
+						<label for="email">Email</label>
+						<input id="email" th:field="*{email}" type="text"/>
+						<p class="help-text" th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></p>
 
-				<button class="button">Sign me up!</button>
-			</form>
+						<label for="password">Password</label>
+						<input id="password" th:field="*{password}" type="password"/>
+						<p class="help-text" th:errors="*{password}" th:if="${#fields.hasErrors('password')}"></p>
+
+						<button class="button">Sign me up!</button>
+					</form>
+				</div>
+			</div>
 		</div>
 		<footer th:replace="fragments/footer :: footer"></footer>
 	</body>

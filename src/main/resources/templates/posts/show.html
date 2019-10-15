@@ -7,16 +7,20 @@
 	<body>
 		<nav th:replace="fragments/navbar :: navbar"></nav>
 		<div class="grid-container">
-			<div class="media-object">
-				<div class="media-object-section">
-					<h1 th:text="${post.title}">Post</h1>
-					<h3>By:
-						<span th:text="${post.getOwner().getEmail()}"></span>
-					</h3>
-					<h5 th:text="${post.body}">Post</h5>
+			<div class="grid-x">
+				<div class="cell small-8 small-offset-2">
+					<div class="media-object">
+						<div class="media-object-section">
+							<h1 class="text-center" th:text="${post.title}">Post</h1>
+							<h3>By:
+								<span th:text="${post.getOwner().getEmail()}"></span>
+							</h3>
+							<h5 th:text="${post.body}">Post</h5>
+						</div>
+					</div>
+					<a class="button float-right" th:href="'../posts/' + ${post.id} + '/edit'">Edit</a>
 				</div>
 			</div>
-			<a class="button" th:href="'../posts/' + ${post.id} + '/edit'">Edit</a>
 		</div>
 		<footer th:replace="fragments/footer :: footer"></footer>
 	</body>

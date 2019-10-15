@@ -7,15 +7,23 @@
 	<body>
 		<nav th:replace="fragments/navbar :: navbar"></nav>
 		<div class="grid-container">
-			<form th:action="@{'/posts/' + ${post.id} + '/edit'}" th:method="post" th:object="${post}">
-				<label for="title">Title</label>
-				<input id="title" th:field="*{title}" type="text"/>
+			<div class="grid-x">
+				<div class="cell small-8 small-offset-2">
+					<h1 class="text-center">Edit an existing Post</h1>
 
-				<label for="body">Body</label>
-				<textarea id="body" th:field="*{body}"></textarea>
+					<form th:action="@{'/posts/' + ${post.id} + '/edit'}" th:method="post" th:object="${post}">
+						<label for="title">Title</label>
+						<input id="title" th:field="*{title}" type="text"/>
+						<p class="help-text" th:errors="*{title}" th:if="${#fields.hasErrors('title')}"></p>
 
-				<button class="button">Submit</button>
-			</form>
+						<label for="body">Body</label>
+						<textarea id="body" style="height: 200px" th:field="*{body}"></textarea>
+						<p class="help-text" th:errors="*{body}" th:if="${#fields.hasErrors('body')}"></p>
+
+						<button class="button">Submit</button>
+					</form>
+				</div>
+			</div>
 		</div>
 		<footer th:replace="fragments/footer :: footer"></footer>
 	</body>
