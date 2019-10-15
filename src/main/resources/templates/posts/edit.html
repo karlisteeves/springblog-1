@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
 	<head th:replace="fragments/header :: header">
-		<meta charset="UTF-8">
+		<meta charset="UTF-8"/>
 		<title>Title</title>
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css" rel="stylesheet">
 	</head>
 	<body>
 		<nav th:replace="fragments/navbar :: navbar"></nav>
 		<div class="grid-container">
 			<form th:action="@{'/posts/' + ${post.id} + '/edit'}" th:method="post" th:object="${post}">
 				<label for="title">Title</label>
-				<input id="title" th:field="*{title}" type="text">
+				<input id="title" th:field="*{title}" type="text"/>
 
 				<label for="body">Body</label>
 				<textarea id="body" th:field="*{body}"></textarea>

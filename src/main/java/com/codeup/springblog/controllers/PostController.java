@@ -1,9 +1,11 @@
 package com.codeup.springblog.controllers;
 
 import com.codeup.springblog.models.Post;
+import com.codeup.springblog.models.User;
 import com.codeup.springblog.repos.PostRepository;
 import com.codeup.springblog.repos.UserRepository;
 import com.codeup.springblog.services.EmailService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,21 +37,22 @@ public class PostController {
     @GetMapping("/posts/{id}")
     public String postsById(@PathVariable long id, Model model) {
 
-        model.addAttribute("post", postDao.findById(id).orElse(null));
+        model.addAttribute("post", postDao.findOne(id));
 
         return "posts/show";
     }
 
     @GetMapping("/posts/{id}/edit")
     public String editPost(@PathVariable long id, Model model) {
-        model.addAttribute("post", postDao.findById(id).orElse(null));
+        model.addAttribute("post", postDao.findOne(id));
 
         return "posts/edit";
     }
 
     @PostMapping("/posts/{id}/edit")
     public String editPostSubmit(@PathVariable("id") long id, @ModelAttribute Post post) {
-        post.setOwner(userDao.findById(1L).orElse(null));
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        post.setOwner(user);
         post.setId(id);
 
         postDao.save(post);
@@ -66,8 +69,8 @@ public class PostController {
 
     @PostMapping("/posts/create")
     public String create(@ModelAttribute Post post) {
-        post.setOwner(userDao.findById(1L).orElse(null));
-
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        post.setOwner(user);
         postDao.save(post);
         emailService.prepareAndSend(post, "You just submitted a new post!", String.format("You just submitted a post titled: %s with a body of: %s", post.getTitle(), post.getBody()));
         return "redirect:/posts";
