@@ -9,12 +9,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class PostController {
@@ -91,5 +89,16 @@ public class PostController {
         postDao.save(post);
         emailService.prepareAndSend(post, "You just submitted a new post!", String.format("You just submitted a post titled: %s with a body of: %s", post.getTitle(), post.getBody()));
         return "redirect:/posts";
+    }
+
+    @GetMapping("/posts.json")
+    public @ResponseBody
+    List<Post> viewAllPostsInJSONFormat() {
+        return (List<Post>) postDao.findAll();
+    }
+
+    @GetMapping("/posts/ajax")
+    public String viewAllPostsWithAjax() {
+        return "posts/ajax";
     }
 }

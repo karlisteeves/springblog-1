@@ -1,5 +1,7 @@
 package com.codeup.springblog.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -28,9 +30,11 @@ public class User {
     @NotBlank
     @Size(min = 8, message = "Passwords must be at least 8 characters long")
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     @OneToMany(mappedBy = "owner")
+    @JsonBackReference
     private List<Post> posts;
 
     public User() {
