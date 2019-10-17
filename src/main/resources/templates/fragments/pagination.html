@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Title</title>
+	</head>
+	<body>
+		<nav th:fragment="pagination">
+			<ul class="pagination text-center">
+				<li th:class="${page.isFirst()}? 'disabled' : ''">
+					<span th:if='${page.isFirst()}'>← First</span>
+					<a th:href="'?page=0'" th:if='${not page.isFirst()}'>← First</a>
+				</li>
+				<li th:class="${page.hasPrevious()}? '' : 'disabled'">
+					<span th:if='${not page.hasPrevious()}'>«</span>
+					<a th:href="'?page=' + ${page.getNumber() - 1}" th:if='${page.hasPrevious()}' title='Go to previous page'>«</a>
+				</li>
+				<li th:class="${(i == page.getNumber() + 1)}? 'current' : ''" th:each="i : ${#numbers.sequence(1, page.getTotalPages())}">
+					<span th:if='${(i - 1) == param.page}' th:text='${i}'>1</span>
+					<a th:href="'?page=' + ${(i -1)}" th:if='${not ((i - 1) == param.page)}'>
+						<span th:text='${i}'>1</span>
+					</a>
+				</li>
+				<li th:class="${page.hasNext()} ? '' : 'disabled'">
+					<span th:if='${not page.hasNext()}'>»</span>
+					<a th:href="'?page=' + ${page.getNumber() + 1}" th:if='${page.hasNext()}' title='Go to next page'>»</a>
+				</li>
+				<li th:class="${page.isLast()}? 'disabled' : ''">
+					<span th:if='${page.isLast()}'>Last →</span>
+					<a th:href="'?page=' + ${page.getTotalPages() - 1}" th:if='${not page.isLast()}'>Last →</a>
+				</li>
+			</ul>
+		</nav>
+	</body>
+</html>
