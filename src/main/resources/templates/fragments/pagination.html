@@ -15,9 +15,9 @@
 					<span th:if='${not page.hasPrevious()}'>«</span>
 					<a th:href="'?page=' + ${page.getNumber() - 1}" th:if='${page.hasPrevious()}' title='Go to previous page'>«</a>
 				</li>
-				<li th:class="${(i == page.getNumber() + 1)}? 'current' : ''" th:each="i : ${#numbers.sequence(1, page.getTotalPages())}">
+				<li th:each="i : ${#numbers.sequence(1, page.getTotalPages())}">
 					<span th:if='${(i - 1) == param.page}' th:text='${i}'>1</span>
-					<a th:href="'?page=' + ${(i -1)}" th:if='${not ((i - 1) == param.page)}'>
+					<a th:class="${(i == page.getNumber() + 1)}? 'current' : ''" th:href="'?page=' + ${(i -1)}" th:if='${not ((i - 1) == param.page)}'>
 						<span th:text='${i}'>1</span>
 					</a>
 				</li>

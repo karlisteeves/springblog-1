@@ -5,6 +5,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -29,11 +31,20 @@ public class Post {
     @JsonManagedReference
     private User owner;
 
-    public Post() {
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "posts_categories",
+            joinColumns = {@JoinColumn(name = "post_id")},
+            inverseJoinColumns = {@JoinColumn(name = "category_id")}
+    )
+    @JsonManagedReference
+    private List<Category> categories = new ArrayList<>();
 
+    public Post() {
     }
 
     public Post(String title, String body, User owner) {
+        this.categories = new ArrayList<>();
         this.title = title;
         this.body = body;
         this.owner = owner;
@@ -69,5 +80,17 @@ public class Post {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public void addCategory(Category category) {
+        categories.add(category);
     }
 }

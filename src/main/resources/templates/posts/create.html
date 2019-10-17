@@ -20,6 +20,27 @@
 						<textarea id="body" style="height: 200px" th:field="*{body}"></textarea>
 						<p class="help-text" th:errors="*{body}" th:if="${#fields.hasErrors('body')}"></p>
 
+						<fieldset class="fieldset">
+							<legend>Categories</legend>
+							<div class="grid-x">
+								<label class="cell auto" for="checkbox1">Lifestyle
+									<input id="checkbox1" th:field="*{categories}" type="checkbox" value="Lifestyle"/>
+								</label>
+								<label class="cell auto" for="checkbox2">Music
+									<input id="checkbox2" th:field="*{categories}" type="checkbox" value="Music"/>
+								</label>
+								<label class="cell auto" for="checkbox3">Food
+									<input id="checkbox3" th:field="*{categories}" type="checkbox" value="Food"/>
+								</label>
+								<label class="cell auto" for="checkbox4">Pets
+									<input id="checkbox4" th:field="*{categories}" type="checkbox" value="Pets"/>
+								</label>
+								<label class="cell auto" for="checkbox5">Movies
+									<input id="checkbox5" th:field="*{categories}" type="checkbox" value="Movies"/>
+								</label>
+							</div>
+						</fieldset>
+
 						<button class="button">Submit</button>
 					</form>
 				</div>

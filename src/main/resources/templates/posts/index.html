@@ -16,6 +16,9 @@
 						<div class="media-object-section">
 							<a th:href="'/posts/' + ${post.id}"><h4 th:text="${post.title}"></h4></a>
 							<p th:text="${post.body}"></p>
+							<span th:each="category : ${post.categories}">
+								<span class="label" th:text=" ${category.getName()} "></span>
+							</span>
 						</div>
 					</div>
 				</div>
