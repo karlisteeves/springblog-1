@@ -5,6 +5,9 @@ import com.codeup.springblog.models.User;
 import com.codeup.springblog.repos.PostRepository;
 import com.codeup.springblog.repos.UserRepository;
 import com.codeup.springblog.services.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +24,7 @@ public class PostController {
     private final UserRepository userDao;
     private final EmailService emailService;
 
+    @Autowired
     public PostController(PostRepository postDao, UserRepository userDao, EmailService emailService) {
         this.postDao = postDao;
         this.userDao = userDao;
@@ -28,9 +32,9 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public String posts(Model model) {
+    public String posts(Model model, @PageableDefault(value = 3) Pageable pageable) {
 
-        model.addAttribute("posts", postDao.findAll());
+        model.addAttribute("page", postDao.findAll(pageable));
 
         return "posts/index";
     }
