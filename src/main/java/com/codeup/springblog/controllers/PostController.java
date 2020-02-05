@@ -22,13 +22,13 @@ public class PostController {
 
     private final PostRepository postDao;
     private final UserRepository userDao;
-    private final EmailService emailService;
+//    private final EmailService emailService;
 
     @Autowired
-    public PostController(PostRepository postDao, UserRepository userDao, EmailService emailService) {
+    public PostController(PostRepository postDao, UserRepository userDao) {
         this.postDao = postDao;
         this.userDao = userDao;
-        this.emailService = emailService;
+//        this.emailService = emailService;
     }
 
     @GetMapping("/posts")
@@ -42,14 +42,14 @@ public class PostController {
     @GetMapping("/posts/{id}")
     public String postsById(@PathVariable long id, Model model) {
 
-        model.addAttribute("post", postDao.findOne(id));
+//        model.addAttribute("post", postDao.findOne(id));
 
         return "posts/show";
     }
 
     @GetMapping("/posts/{id}/edit")
     public String editPost(@PathVariable long id, Model model) {
-        model.addAttribute("post", postDao.findOne(id));
+//        model.addAttribute("post", postDao.findOne(id));
 
         return "posts/edit";
     }
@@ -91,7 +91,7 @@ public class PostController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setOwner(user);
         postDao.save(post);
-        emailService.prepareAndSend(post, "You just submitted a new post!", String.format("You just submitted a post titled: %s with a body of: %s", post.getTitle(), post.getBody()));
+//        emailService.prepareAndSend(post, "You just submitted a new post!", String.format("You just submitted a post titled: %s with a body of: %s", post.getTitle(), post.getBody()));
         return "redirect:/posts";
     }
 
